@@ -1157,3 +1157,10 @@ legend { padding: 0; }
 }
 
 .about .section__title { font-size: clamp(36px, 5vw, 76px); }
+
+/* foto reale di Francesco: didascalia leggibile sopra il muro chiaro, grana più leggera */
+.about__media::before { opacity: 0.1; }
+.about__cap {
+  inset: 0 0 auto 0; padding: 16px 16px 40px;
+  background: linear-gradient(180deg, rgb(10 10 10 / 0.72), rgb(10 10 10 / 0));
+}
