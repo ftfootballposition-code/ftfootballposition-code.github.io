@@ -83,16 +83,36 @@ for cid in set(np.unique(lab)) - {0} - border_ids:
     if in_ball[int(cy), int(cx)]:
         keep_white |= comp  # spicchi bianchi del pallone: restano opachi
 
-# ---- 2. "color to alpha" sul bianco, tranne il pallone -----------------------
-alpha = (255 - a).max(-1) / 255.0
-alpha = np.clip((alpha - 0.025) / (1 - 0.025), 0, 1)
+# ---- 2. trasparenza: solo sfondo e bordi, l'interno del logo resta opaco -----
+# (un "color to alpha" su tutto il logo renderebbe l'oro semitrasparente e,
+#  su fondo nero, più scuro e aranciato)
 protect = Image.fromarray((keep_white * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(3))
 protect = np.asarray(protect) > 0
-alpha = np.where(protect, 1.0, alpha)
+bg = white & ~protect
+ring = np.asarray(Image.fromarray((bg * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(5))) > 0
+soft = (ring | (a.min(-1) > 190)) & ~bg & ~protect
+
+c2a = (255 - a).max(-1) / 255.0
+c2a = np.clip((c2a - 0.025) / (1 - 0.025), 0, 1)
+alpha = np.where(bg, 0.0, np.where(soft, c2a, 1.0))
 
 safe = np.maximum(alpha, 1e-4)[..., None]
-rgb = np.where(protect[..., None], a, 255 - (255 - a) / safe)
-rgb = np.clip(rgb, 0, 255)
+unmult = np.clip(255 - (255 - a) / safe, 0, 255)
+rgb = np.where(soft[..., None], unmult, a)
+
+# ---- 2b. oro del logo = oro del sito (#D9AE4F) --------------------------------
+BRAND_GOLD = np.array([0xD9, 0xAE, 0x4F], np.float32)
+HILITE = np.array([255, 241, 206], np.float32)
+L_REF = 127.0  # luminanza media dell'oro piatto di "FOOTBALL POSITION" nell'originale
+ch_ = rgb.max(-1) - rgb.min(-1)
+Lp = rgb @ np.array([0.299, 0.587, 0.114], np.float32)
+w_gold = np.clip((ch_ - 22) / 30, 0, 1) * ~protect
+k = (Lp / L_REF)[..., None]
+dark_side = BRAND_GOLD * np.clip(k, 0, 1)
+t = np.clip((Lp - L_REF) / (255 - L_REF), 0, 1)[..., None]
+light_side = BRAND_GOLD + (HILITE - BRAND_GOLD) * t * 0.75
+gold_rgb = np.where(k <= 1, dark_side, light_side)
+rgb = rgb * (1 - w_gold[..., None]) + gold_rgb * w_gold[..., None]
 
 
 def crop_box(alpha_, pad=12, y0=0, y1=None):

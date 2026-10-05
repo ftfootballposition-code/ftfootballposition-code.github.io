@@ -157,20 +157,24 @@
 
   /* ------------------------------------------------------------------
      Profile builder
+     Calcio (Youth / Senior): livello → fase → ruolo sul campo
+     Fitness Athlete: niente campo né ruolo, solo l'obiettivo di allenamento
      ------------------------------------------------------------------ */
   const LEVELS = {
     youth: [
-      { id: 'u14', name: 'U14 – U15', note: 'Giovanissimi', code: 'U14', sessions: 2 },
-      { id: 'u16', name: 'U16 – U17', note: 'Allievi', code: 'U16', sessions: 2 },
-      { id: 'u18', name: 'U18 – U19', note: 'Juniores · Primavera', code: 'U18', sessions: 3 },
+      { id: 'u14', name: 'U14 – U15', note: 'Giovanissimi', code: 'U14' },
+      { id: 'u16', name: 'U16 – U17', note: 'Allievi', code: 'U16' },
+      { id: 'u18', name: 'U18 – U19', note: 'Juniores · Primavera', code: 'U18' },
     ],
-    adult: [
-      { id: 'am', name: 'Amatoriale', note: 'CSI · UISP · 3ª Cat.', code: 'AM', sessions: 2 },
-      { id: 'dil', name: 'Dilettanti', note: '2ª Cat. – Eccellenza', code: 'DL', sessions: 3 },
-      { id: 'sd', name: 'Serie D', note: 'Semi-pro', code: 'SD', sessions: 3 },
-      { id: 'pro', name: 'Professionista', note: 'Serie C e oltre', code: 'PR', sessions: 4 },
+    senior: [
+      { id: 'am', name: 'Amatoriale', note: 'CSI · UISP · Calcio a 8 · Tornei amatoriali', code: 'AM' },
+      { id: 'dil', name: 'Dilettante', note: '3ª · 2ª · 1ª Categoria', code: 'DL' },
+      { id: 'dile', name: 'Dilettante Élite', note: 'Promozione · Eccellenza', code: 'DE' },
+      { id: 'sd', name: 'Semi-Pro', note: 'Serie D', code: 'SD' },
+      { id: 'pro', name: 'Professionista', note: 'Serie A · B · C', code: 'PR' },
     ],
   };
+  const HIGH_LEVELS = ['u18', 'dile', 'sd', 'pro'];
 
   const QUALITIES = [
     ['acc', 'Accelerazione'],
@@ -184,7 +188,7 @@
   // Profili di ruolo: richieste di gara (0–100) e focus specifici.
   const ROLES = {
     gk: {
-      name: 'Portiere', short: 'GK', dots: [[34, 97]],
+      name: 'Portiere', short: 'P', dots: [[34, 97]],
       demand: 'Esplosività su 1–3 metri, salto e reattività. Tuffi, cadute e rialzate ripetute: pochi metri, intensità massima.',
       q: { acc: 80, vmax: 25, cod: 75, str: 75, pow: 95, end: 35 },
       focus: ['Potenza reattiva e stacco verticale', 'Rapidità laterale e lavoro di piedi', 'Forza di core e spalle per i tuffi'],
@@ -233,97 +237,101 @@
     },
   };
 
-  // Fasi: obiettivo, modifiche alle priorità, settimana tipo.
-  // p = priorità della sessione FT (vengono mostrate le prime N in base al livello)
   const PHASES = {
     off: {
       name: 'Off-season', code: 'OFF',
       goal: 'Ricostruire la base: forza, correzione dei deficit e volume progressivo.',
       mod: { str: 12, pow: 0, end: -8, vmax: -6, acc: 0, cod: 0 },
       focus: 'Correzione delle asimmetrie emerse in valutazione',
-      week: [
-        { d: 'Lun', t: 'gym', l: 'Forza generale', p: 1 },
-        { d: 'Mar', t: 'field', l: 'Tecnica di corsa · Aerobico', p: 2 },
-        { d: 'Mer', t: 'rest', l: 'Riposo' },
-        { d: 'Gio', t: 'gym', l: 'Forza · Deficit', p: 3 },
-        { d: 'Ven', t: 'field', l: 'Accelerazione · COD', p: 4 },
-        { d: 'Sab', t: 'rec', l: 'Mobilità', p: 5 },
-        { d: 'Dom', t: 'rest', l: 'Riposo' },
-      ],
-      fallback: 'rest', bonus: 1,
     },
     pre: {
       name: 'Pre-season', code: 'PRE',
       goal: 'Costruire capacità di lavoro e velocità per arrivare pronto alla prima giornata.',
       mod: { str: 0, pow: 4, end: 12, vmax: 4, acc: 6, cod: 0 },
       focus: 'Esposizione progressiva alla velocità massima',
-      week: [
-        { d: 'Lun', t: 'gym', l: 'Forza · Potenza', p: 1 },
-        { d: 'Mar', t: 'field', l: 'Accelerazione · RSA', p: 2 },
-        { d: 'Mer', t: 'club', l: 'Squadra' },
-        { d: 'Gio', t: 'field', l: 'Velocità massima', p: 3 },
-        { d: 'Ven', t: 'gym', l: 'Potenza · Prevenzione', p: 4 },
-        { d: 'Sab', t: 'match', l: 'Amichevole' },
-        { d: 'Dom', t: 'rest', l: 'Riposo' },
-      ],
-      fallback: 'club', bonus: 0,
     },
     in: {
       name: 'In-season', code: 'IN',
       goal: 'Mantenere forza e velocità senza accumulare fatica per la partita del weekend.',
       mod: { str: -4, pow: 6, end: -6, vmax: 4, acc: 6, cod: 0 },
-      focus: 'Carichi gestiti su MD: niente fatica residua in partita',
-      week: [
-        { d: 'Lun', t: 'rec', l: 'MD+1 · Recupero', p: 3, f: { t: 'rest', l: 'MD+1 · Riposo' } },
-        { d: 'Mar', t: 'club', l: 'MD-5 · Squadra' },
-        { d: 'Mer', t: 'gym', l: 'MD-4 · Forza', p: 1 },
-        { d: 'Gio', t: 'field', l: 'MD-3 · Velocità', p: 2 },
-        { d: 'Ven', t: 'club', l: 'MD-2 · Squadra' },
-        { d: 'Sab', t: 'field', l: 'MD-1 · Attivazione', p: 4, f: { t: 'club', l: 'MD-1 · Squadra' } },
-        { d: 'Dom', t: 'match', l: 'MD · Partita' },
-      ],
-      fallback: 'club', bonus: 0,
+      focus: 'Carichi gestiti sul microciclo: niente fatica residua in partita',
     },
     win: {
       name: 'Winter break', code: 'WB',
       goal: 'Ricaricare e rilanciare: mini-blocco di forza e velocità per il girone di ritorno.',
       mod: { str: 8, pow: 4, end: -4, vmax: 6, acc: 2, cod: 0 },
       focus: 'Richiamo della velocità prima della ripresa',
-      week: [
-        { d: 'Lun', t: 'gym', l: 'Forza', p: 1 },
-        { d: 'Mar', t: 'field', l: 'Velocità · COD', p: 2 },
-        { d: 'Mer', t: 'rest', l: 'Riposo' },
-        { d: 'Gio', t: 'gym', l: 'Potenza', p: 3 },
-        { d: 'Ven', t: 'field', l: 'Richiamo RSA', p: 4 },
-        { d: 'Sab', t: 'rec', l: 'Mobilità', p: 5 },
-        { d: 'Dom', t: 'rest', l: 'Riposo' },
-      ],
-      fallback: 'rest', bonus: 1,
     },
   };
 
-  const TYPE_LABEL = { gym: 'Gym', field: 'Field', rec: 'Recovery', club: 'Squadra', match: 'Partita', rest: 'Riposo' };
-  const PATHS = { field: 'Field', gym: 'Gym', complete: 'Complete Performance' };
+  // Fitness Athlete: obiettivo di allenamento al posto del ruolo
+  const FIT_QUALITIES = [
+    ['str', 'Forza'],
+    ['pow', 'Potenza'],
+    ['spd', 'Velocità'],
+    ['end', 'Resistenza'],
+    ['mob', 'Mobilità'],
+    ['core', 'Core · Stabilità'],
+  ];
+  const GOALS = {
+    str: {
+      name: 'Strength', it: 'Forza', code: 'STR', path: 'gym',
+      demand: 'Obiettivo: diventare più forte in modo solido e progressivo, con una tecnica pulita sui fondamentali e carichi che crescono settimana dopo settimana.',
+      q: { str: 95, pow: 65, spd: 40, end: 40, mob: 60, core: 75 },
+      focus: ['Progressione sui fondamentali: squat, stacco, spinta e trazione', 'Tecnica degli esercizi prima del carico', 'Core e stabilità per trasferire la forza'],
+    },
+    pow: {
+      name: 'Power', it: 'Potenza', code: 'PWR', path: 'gym',
+      demand: 'Obiettivo: esprimere forza più velocemente. Salti, lanci e sollevamenti esplosivi costruiti su una base di forza adeguata.',
+      q: { str: 75, pow: 95, spd: 70, end: 35, mob: 55, core: 70 },
+      focus: ['Pliometria progressiva e atterraggi corretti', 'Esercizi balistici e lanci con palla medica', 'Base di forza per sostenere il lavoro esplosivo'],
+    },
+    spd: {
+      name: 'Speed', it: 'Velocità', code: 'SPD', path: 'field',
+      demand: 'Obiettivo: correre più veloce e cambiare direzione con più controllo. Tecnica di corsa, accelerazione e velocità massima.',
+      q: { str: 60, pow: 80, spd: 95, end: 45, mob: 65, core: 60 },
+      focus: ['Tecnica di corsa e accelerazione', 'Velocità massima ed esposizione allo sprint', 'Cambi di direzione e decelerazione'],
+    },
+    end: {
+      name: 'Endurance', it: 'Resistenza', code: 'END', path: 'field',
+      demand: 'Obiettivo: reggere più a lungo e recuperare meglio tra uno sforzo e l’altro, con lavoro aerobico e intervallato ben dosato.',
+      q: { str: 45, pow: 40, spd: 50, end: 95, mob: 55, core: 55 },
+      focus: ['Base aerobica e lavoro intervallato', 'Capacità di recupero tra gli sforzi', 'Forza di base per prevenire i sovraccarichi'],
+    },
+    gen: {
+      name: 'General Fitness', it: 'Condizione generale', code: 'GEN', path: 'complete',
+      demand: 'Obiettivo: stare meglio e muoverti meglio. Un programma equilibrato tra forza, condizionamento e mobilità, sostenibile nel tempo.',
+      q: { str: 70, pow: 50, spd: 50, end: 70, mob: 80, core: 75 },
+      focus: ['Equilibrio tra forza, condizionamento e mobilità', 'Qualità del movimento e prevenzione', 'Progressione costante e sostenibile'],
+    },
+  };
 
-  const state = { cat: null, level: null, phase: null, role: null };
+  const PATHS = { field: 'Field', gym: 'Gym', complete: 'Complete Performance' };
+  const STEPS = { football: ['cat', 'level', 'phase', 'role'], fitness: ['cat', 'goal'] };
+
+  const state = { cat: null, level: null, phase: null, role: null, goal: null };
+  const isFitness = () => state.cat === 'fitness';
+  let lastFootballCat = null;
 
   const form = $('[data-builder]');
   const fs = Object.fromEntries($$('[data-q]', form).map((f) => [f.dataset.q, f]));
+  const branches = Object.fromEntries($$('[data-branch]', form).map((b) => [b.dataset.branch, b]));
   const levelsBox = $('[data-levels]');
   const rolesBox = $('[data-roles]');
+  const goalsBox = $('[data-goals]');
   const dotsG = $('[data-dots]');
   const out = {
-    code: $('[data-code]'), progress: $('[data-progress]'), bar: $('[data-progress-bar]'),
-    empty: $('[data-empty]'), body: $('[data-body]'), title: $('[data-title]'), demand: $('[data-demand]'),
-    bars: $('[data-bars]'), week: $('[data-week]'), sessions: $('[data-sessions]'), focus: $('[data-focus]'),
-    rec: $('[data-rec]'), request: $('[data-request]'),
+    code: $('[data-code]'), progress: $('[data-progress]'), total: $('[data-total]'), bar: $('[data-progress-bar]'),
+    empty: $('[data-empty]'), body: $('[data-body]'), kind: $('[data-kind]'), title: $('[data-title]'), demand: $('[data-demand]'),
+    bars: $('[data-bars]'), focus: $('[data-focus]'), rec: $('[data-rec]'), request: $('[data-request]'),
   };
 
   const radio = (name, value, title, note) =>
     `<label class="choice"><input type="radio" name="${name}" value="${value}"><span><b>${title}</b>${note ? `<small>${note}</small>` : ''}</span></label>`;
 
-  // ruoli: lista + punti sul campo
   rolesBox.innerHTML = Object.entries(ROLES).map(([id, r]) => radio('role', id, r.name, r.short)).join('');
+  goalsBox.innerHTML = Object.entries(GOALS).map(([id, g]) => radio('goal', id, g.name, g.it)).join('');
+
   const SVG = 'http://www.w3.org/2000/svg';
   Object.entries(ROLES).forEach(([id, r]) => {
     r.dots.forEach(([x, y]) => {
@@ -336,7 +344,7 @@
         `<circle class="core" cx="${x}" cy="${y}" r="2.2"/>` +
         `<text x="${x}" y="${y + 5.6}">${r.short}</text>`;
       g.addEventListener('click', () => {
-        if (fs.role.disabled) return;
+        if (fs.role.disabled || isFitness()) return;
         const input = $(`input[name="role"][value="${id}"]`, rolesBox);
         input.checked = true;
         input.dispatchEvent(new Event('change', { bubbles: true }));
@@ -345,8 +353,13 @@
     });
   });
 
-  const renderLevels = () => {
-    levelsBox.innerHTML = LEVELS[state.cat].map((l) => radio('level', l.id, l.name, l.note)).join('');
+  const setBranch = (name) => {
+    Object.entries(branches).forEach(([k, el]) => {
+      const open = k === name;
+      el.classList.toggle('is-open', open);
+      el.inert = !open;
+      el.setAttribute('aria-hidden', String(!open));
+    });
   };
 
   form.addEventListener('change', (e) => {
@@ -355,9 +368,22 @@
     state[name] = value;
 
     if (name === 'cat') {
-      state.level = null;
-      renderLevels();
-      fs.level.disabled = false;
+      if (value === 'fitness') {
+        setBranch('fitness');
+      } else {
+        setBranch('football');
+        // cambio Youth ↔ Senior: livelli diversi, i passi 02–04 ripartono da capo
+        // (andare su Fitness e tornare alla stessa categoria invece conserva le scelte)
+        if (value !== lastFootballCat) {
+          state.level = state.phase = state.role = null;
+          levelsBox.innerHTML = LEVELS[value].map((l) => radio('level', l.id, l.name, l.note)).join('');
+          $$('input[name="phase"], input[name="role"]', form).forEach((i) => { i.checked = false; });
+          lastFootballCat = value;
+        }
+        fs.level.disabled = false;
+        fs.phase.disabled = !state.level;
+        fs.role.disabled = !state.phase;
+      }
     }
     if (name === 'level') fs.phase.disabled = false;
     if (name === 'phase') fs.role.disabled = false;
@@ -368,6 +394,19 @@
   const clamp = (n) => Math.max(15, Math.min(100, Math.round(n)));
 
   const compute = () => {
+    if (isFitness()) {
+      const goal = GOALS[state.goal];
+      return {
+        kind: 'Fitness Performance Profile',
+        title: `Fitness Athlete · ${goal.name}`,
+        demand: goal.demand,
+        qualities: FIT_QUALITIES,
+        q: goal.q,
+        focus: goal.focus,
+        path: goal.path,
+        label: `Fitness Athlete, ${goal.name}`,
+      };
+    }
     const level = LEVELS[state.cat].find((l) => l.id === state.level);
     const phase = PHASES[state.phase];
     const role = ROLES[state.role];
@@ -381,48 +420,50 @@
       q[k] = clamp(v);
     });
 
-    let sessions = level.sessions + phase.bonus;
-    if (youth && state.phase === 'in') sessions = Math.min(sessions, 2);
-    const maxP = Math.max(...phase.week.map((d) => d.p || 0));
-    sessions = Math.min(sessions, maxP);
-
-    const week = phase.week.map((d) => {
-      if (!d.p) return d;
-      if (d.p <= sessions) return d;
-      if (d.f) return { d: d.d, ...d.f };
-      return { d: d.d, t: phase.fallback, l: phase.fallback === 'club' ? 'Squadra' : 'Libero' };
-    });
-
     let path = 'field';
-    if (sessions >= 3 || state.phase === 'pre') path = 'complete';
+    if (state.phase === 'pre' || HIGH_LEVELS.includes(state.level)) path = 'complete';
     else if (state.phase === 'off' || state.phase === 'win') path = 'gym';
 
     const focus = [...role.focus, phase.focus];
-    if (youth) focus.push('Maturazione biologica (PHV): carichi calibrati sull’età');
+    if (youth) focus.push('Sviluppo adattato all’età: qualità del movimento prima del carico');
 
-    return { level, phase, role, q, sessions, week, path, focus };
+    return {
+      kind: 'Football Performance Profile',
+      title: `${role.name} · ${level.name} · ${phase.name}`,
+      demand: `${role.demand} ${phase.goal}`,
+      qualities: QUALITIES,
+      q,
+      focus,
+      path,
+      label: `${role.name}, ${level.name}, ${phase.name}`,
+    };
   };
 
   let swapTimer;
   const update = () => {
-    const done = ['cat', 'level', 'phase', 'role'].filter((k) => state[k]).length;
+    const steps = STEPS[isFitness() ? 'fitness' : 'football'];
+    const done = steps.filter((k) => state[k]).length;
     out.progress.textContent = done;
-    out.bar.style.setProperty('--p', done / 4);
+    out.total.textContent = steps.length;
+    out.bar.style.setProperty('--p', done / steps.length);
 
     Object.entries(fs).forEach(([k, f]) => f.classList.toggle('is-done', !!state[k]));
-
     $$('.pdot', dotsG).forEach((g) => g.classList.toggle('is-on', g.dataset.role === state.role));
 
-    const lvl = state.cat && state.level ? LEVELS[state.cat].find((l) => l.id === state.level) : null;
-    out.code.textContent = [
-      'FT',
-      state.cat ? (state.cat === 'youth' ? 'YT' : 'AD') : '—',
-      lvl ? lvl.code : '—',
-      state.phase ? PHASES[state.phase].code : '—',
-      state.role ? ROLES[state.role].short : '—',
-    ].join(' · ');
+    if (isFitness()) {
+      out.code.textContent = ['FT', 'FIT', state.goal ? GOALS[state.goal].code : '—'].join(' · ');
+    } else {
+      const lvl = state.cat && state.level ? LEVELS[state.cat].find((l) => l.id === state.level) : null;
+      out.code.textContent = [
+        'FT',
+        state.cat ? (state.cat === 'youth' ? 'YT' : 'SR') : '—',
+        lvl ? lvl.code : '—',
+        state.phase ? PHASES[state.phase].code : '—',
+        state.role ? ROLES[state.role].short : '—',
+      ].join(' · ');
+    }
 
-    if (done < 4) {
+    if (done < steps.length) {
       out.empty.hidden = false;
       out.body.hidden = true;
       return;
@@ -439,15 +480,18 @@
       swapTimer = setTimeout(() => out.body.classList.remove('is-swap'), 120);
     }
 
-    out.title.textContent = `${r.role.name} · ${r.level.name} · ${r.phase.name}`;
-    out.demand.textContent = `${r.role.demand} ${r.phase.goal}`;
+    out.kind.textContent = r.kind;
+    out.title.textContent = r.title;
+    out.demand.textContent = r.demand;
 
-    // barre: crea una volta, poi aggiorna (così la transizione riparte dal valore attuale)
-    if (!out.bars.children.length) {
-      out.bars.innerHTML = QUALITIES.map(([k, label]) =>
+    // barre: ricreate solo se cambia il tipo di profilo, così la transizione parte dal valore attuale
+    const kindKey = isFitness() ? 'fit' : 'foot';
+    if (out.bars.dataset.kind !== kindKey) {
+      out.bars.dataset.kind = kindKey;
+      out.bars.innerHTML = r.qualities.map(([k, label]) =>
         `<li data-k="${k}"><span>${label}</span><span class="bar"><i></i></span><span class="val">0</span></li>`).join('');
     }
-    const top = [...QUALITIES].sort((a, b) => r.q[b[0]] - r.q[a[0]]).slice(0, 2).map(([k]) => k);
+    const top = [...r.qualities].sort((a, b) => r.q[b[0]] - r.q[a[0]]).slice(0, 2).map(([k]) => k);
     requestAnimationFrame(() => {
       $$('li', out.bars).forEach((li) => {
         const v = r.q[li.dataset.k];
@@ -457,15 +501,9 @@
       });
     });
 
-    out.sessions.textContent = `${r.sessions} sessioni FT / sett.`;
-    out.week.innerHTML = r.week.map((d) =>
-      `<li data-t="${d.t}"><span class="d">${d.d}</span><span class="t">${TYPE_LABEL[d.t]}</span><span class="l">${d.l}</span></li>`).join('');
-
     out.focus.innerHTML = r.focus.map((f) => `<li>${f}</li>`).join('');
     out.rec.textContent = PATHS[r.path];
-
-    const summary = `${out.code.textContent} — ${r.role.name}, ${r.level.name}, ${r.phase.name} → ${PATHS[r.path]}`;
-    out.request.dataset.summary = summary;
+    out.request.dataset.summary = `${out.code.textContent} — ${r.label} → ${PATHS[r.path]}`;
   };
 
   out.request.addEventListener('click', () => {
@@ -477,29 +515,55 @@
   });
 
   /* ------------------------------------------------------------------
-     Pacchetti: In presenza / Online
+     Pacchetti: In presenza / Online (due pannelli, tab accessibili)
      ------------------------------------------------------------------ */
   const seg = $('.seg');
-  const plans = $('.plans');
-  $$('.seg__btn', seg).forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const mode = btn.dataset.mode;
-      if (seg.dataset.mode === mode || (!seg.dataset.mode && mode === 'live')) return;
-      seg.dataset.mode = mode;
-      $$('.seg__btn', seg).forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
-      plans.classList.add('is-swap');
-      setTimeout(() => {
-        $$('[data-live]', plans).forEach((el) => { el.textContent = el.dataset[mode]; });
-        plans.classList.remove('is-swap');
-      }, 150);
+  const tabs = $$('.seg__btn', seg);
+  const panels = Object.fromEntries($$('[data-panel]').map((p) => [p.dataset.panel, p]));
+  let panelTimer;
+
+  const showMode = (mode, focus = false) => {
+    const current = seg.dataset.mode || 'live';
+    if (current === mode) return;
+    seg.dataset.mode = mode;
+    tabs.forEach((b) => {
+      const on = b.dataset.mode === mode;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+      if (on && focus) b.focus();
+    });
+    const from = panels[current];
+    const to = panels[mode];
+    clearTimeout(panelTimer);
+    from.classList.remove('is-active');
+    panelTimer = setTimeout(() => {
+      from.hidden = true;
+      to.hidden = false;
+      requestAnimationFrame(() => requestAnimationFrame(() => to.classList.add('is-active')));
+    }, reduceMotion ? 0 : 160);
+  };
+
+  tabs.forEach((btn, i) => {
+    btn.tabIndex = i === 0 ? 0 : -1;
+    btn.addEventListener('click', () => showMode(btn.dataset.mode));
+    btn.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      showMode(next.dataset.mode, true);
     });
   });
 
   $$('[data-plan-cta]').forEach((a) => a.addEventListener('click', () => {
     const msg = $('.form textarea[name="messaggio"]');
-    const mode = seg.dataset.mode === 'online' ? 'Online' : 'In presenza';
-    if (msg && !msg.value.trim()) msg.value = `Mi interessa il pacchetto ${a.dataset.planCta} (${mode}).`;
-    toast(`${a.dataset.planCta} · ${mode} aggiunto alla richiesta`);
+    const mode = a.dataset.planMode;
+    const what = mode === 'Online' ? `${a.dataset.planCta} Online (12 settimane)` : `${a.dataset.planCta} in presenza`;
+    if (msg && !msg.value.trim()) {
+      msg.value = mode === 'Online'
+        ? `Mi interessa il percorso ${what}.`
+        : `Vorrei ricevere informazioni sul percorso ${what}.`;
+    }
+    toast(`${what} aggiunto alla richiesta`);
   }));
 
   /* ------------------------------------------------------------------

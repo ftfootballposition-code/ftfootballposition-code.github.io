@@ -23,7 +23,7 @@ os.makedirs(OUT, exist_ok=True)
 F_BLACK = "/System/Library/Fonts/Supplemental/Arial Black.ttf"
 F_MONO = "/System/Library/Fonts/Menlo.ttc"
 
-GOLD = np.array([0.79, 0.66, 0.43], np.float32)
+GOLD = np.array([0xD9, 0xAE, 0x4F], np.float32) / 255  # oro FT #D9AE4F, lo stesso del sito
 
 
 # ---------------------------------------------------------------- utils
@@ -110,7 +110,7 @@ def grade(L, warmth=1.0):
     L = np.clip(L, 0, 1.5)
     s = smoothstep(0.2, 0.9, L)[..., None] * warmth
     cool = np.array([0.93, 0.94, 0.95], np.float32)
-    warm = np.array([1.0, 0.83, 0.56], np.float32)
+    warm = GOLD / GOLD.max()  # tinta delle alte luci = oro FT
     rgb = L[..., None] * (cool * (1 - s) + warm * s)
     hl = smoothstep(0.82, 1.25, L)[..., None]
     rgb = rgb + (np.array([1.0, 0.95, 0.86], np.float32) - rgb) * hl * 0.7
@@ -338,7 +338,7 @@ def field():
     rgb = grade(tonemap(out * 1.15, 1.9) * 1.05, 0.85)
 
     # coni (dal più lontano al più vicino), colore oro FT
-    cone_col = np.array([0.88, 0.66, 0.34], np.float32)
+    cone_col = GOLD * 1.02
     for (px, pz) in sorted(cones, key=lambda c: -c[1]):
         sx = cx + (px - camX) * f / pz
         by = yh + hc * f / pz
@@ -562,7 +562,7 @@ def complete():
     glow = blur(ht, 14) * 1.1 + blur(ht, 50) * 0.6 + blur(tr, 8) * 0.35
     rgb = rgb + glow[..., None] * GOLD * 0.8
     rgb = rgb * (1 - tr[..., None] * 0.6) + tr[..., None] * np.array([0.8, 0.78, 0.74]) * 0.6
-    rgb = rgb * (1 - ht[..., None]) + ht[..., None] * np.array([1.0, 0.86, 0.6])
+    rgb = rgb * (1 - ht[..., None]) + ht[..., None] * GOLD
     rgb = rgb * (1 - dt[..., None]) + dt[..., None] * np.array([1.0, 0.97, 0.9])
 
     # etichette dati in stile Salah

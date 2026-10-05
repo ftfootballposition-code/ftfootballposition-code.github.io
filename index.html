@@ -82,8 +82,8 @@
   </div>
 
   <dl class="hero__tags container hero__in" style="--i:8">
-    <div><dt>Position</dt><dd>GK → ST</dd></div>
-    <div><dt>Level</dt><dd>Youth · Adult</dd></div>
+    <div><dt>Position</dt><dd>P → ATT</dd></div>
+    <div><dt>Level</dt><dd>Youth · Senior</dd></div>
     <div><dt>Season</dt><dd>Off · Pre · In-season</dd></div>
   </dl>
 </section>
@@ -148,32 +148,39 @@
       <li class="step reveal">
         <span class="mono step__num">01</span>
         <h3 class="step__title">Assess</h3>
+        <p class="mono step__it">Valutazione iniziale</p>
         <p class="step__text">Test di sprint, salto, cambi di direzione e resistenza, più uno screening del movimento. Sappiamo da dove parti, con i numeri.</p>
-        <p class="mono step__out">10/30 m · CMJ · 505 · Yo-Yo IR1</p>
+        <p class="mono step__out">10/30 m · CMJ · 505 · 5-10-5 · Yo-Yo IR1 · Bronco Test</p>
       </li>
       <li class="step reveal">
         <span class="mono step__num">02</span>
         <h3 class="step__title">Build your profile</h3>
-        <p class="step__text">Incrociamo i test con ruolo, livello e fase della stagione. Ne escono le tue priorità: cosa sviluppare, cosa mantenere, cosa proteggere.</p>
+        <p class="mono step__it">Profilo prestativo</p>
+        <p class="step__text">Incrociamo i risultati dei test con ruolo, livello, fase della stagione, carico di squadra e obiettivi individuali. Definiamo così le tue priorità: cosa sviluppare, cosa mantenere e quali aspetti gestire.</p>
         <p class="mono step__out">Position × Level × Season</p>
       </li>
       <li class="step reveal">
         <span class="mono step__num">03</span>
         <h3 class="step__title">Train</h3>
-        <p class="step__text">Sessioni in campo e in palestra incastrate con gli allenamenti di squadra. Niente lavoro pesante a ridosso della partita.</p>
-        <p class="mono step__out">Field · Gym · MD-4 → MD-1</p>
+        <p class="mono step__it">Programmazione</p>
+        <p class="step__text">Costruiamo la programmazione Field, Gym o Complete intorno agli allenamenti di squadra e alla partita. Frequenza, volume e distribuzione delle sessioni vengono adattati al tuo microciclo.</p>
+        <p class="mono step__out">Field · Gym · Complete · MD+1 → MD-1</p>
+        <p class="step__note">MD = Match Day (giorno della partita)</p>
       </li>
       <li class="step reveal">
         <span class="mono step__num">04</span>
         <h3 class="step__title">Monitor</h3>
-        <p class="step__text">Ogni settimana registriamo carico, fatica e sensazioni. A fine blocco ripetiamo i test e aggiorniamo il programma.</p>
-        <p class="mono step__out">RPE · Wellness · Re-test 6–8 wk</p>
+        <p class="mono step__it">Monitoraggio</p>
+        <p class="step__text">Monitoriamo carico, fatica e percezioni dell’atleta durante il percorso. I feedback permettono di adattare progressivamente la programmazione.</p>
+        <p class="mono step__out">RPE · Wellness · Training Load · Re-test</p>
       </li>
       <li class="step reveal">
         <span class="mono step__num">05</span>
         <h3 class="step__title">Perform</h3>
-        <p class="step__text">Arrivi alla partita più veloce, più forte e più fresco. Nel tuo ruolo, al tuo livello.</p>
-        <p class="mono step__out">Match day</p>
+        <p class="mono step__it">Performance in campo</p>
+        <p class="step__text">Trasforma il lavoro svolto in performance sul campo. Preparazione costruita sulle richieste del tuo ruolo, del tuo livello e della tua stagione.</p>
+        <p class="mono step__out step__out--soft">Your Position · Your Level · Your Performance</p>
+        <p class="mono step__out">Match Day</p>
       </li>
     </ol>
   </div>
@@ -184,87 +191,96 @@
   <div class="container">
     <header class="section__head">
       <p class="eyebrow reveal"><span class="dot"></span>Your performance profile</p>
-      <h2 class="display section__title" data-split>Not a football workout.<br><span class="gold">Yours.</span></h2>
-      <p class="section__lead reveal">Fai quattro scelte e guarda come cambiano priorità, settimana tipo e percorso consigliato. È lo stesso ragionamento della valutazione, in versione semplificata.</p>
+      <h2 class="display section__title" data-split>Not just a football program.<br><span class="gold">Your program.</span></h2>
+      <p class="section__lead reveal">Pochi passaggi e vedi come cambiano priorità di lavoro, focus del blocco e percorso consigliato. È lo stesso ragionamento della valutazione iniziale, in versione semplificata.</p>
     </header>
 
     <div class="builder__grid">
       <form class="builder__form reveal" data-builder onsubmit="return false">
-        <!-- 1. Categoria -->
+        <!-- 01. Categoria: decide il percorso dell'interfaccia -->
         <fieldset class="q" data-q="cat">
           <legend class="q__head"><span class="mono q__n">01</span><span class="q__label">Category</span></legend>
-          <div class="choices choices--2" role="radiogroup">
-            <label class="choice"><input type="radio" name="cat" value="youth"><span><b>Youth</b><small>U14 – U19</small></span></label>
-            <label class="choice"><input type="radio" name="cat" value="adult"><span><b>Adult</b><small>Senior</small></span></label>
+          <div class="choices choices--3" role="radiogroup">
+            <label class="choice"><input type="radio" name="cat" value="youth"><span><b>Youth Football Player</b><small>U14 → U19</small></span></label>
+            <label class="choice"><input type="radio" name="cat" value="senior"><span><b>Football Player</b><small>Senior</small></span></label>
+            <label class="choice"><input type="radio" name="cat" value="fitness"><span><b>Fitness Athlete</b><small>Fitness / Recreational</small></span></label>
           </div>
         </fieldset>
 
-        <!-- 2. Livello -->
-        <fieldset class="q" data-q="level" disabled>
-          <legend class="q__head"><span class="mono q__n">02</span><span class="q__label">Competitive level</span></legend>
-          <div class="choices" role="radiogroup" data-levels>
-            <p class="q__hint">Scegli prima la categoria.</p>
-          </div>
-        </fieldset>
+        <!-- Ramo calcio: livello → fase → ruolo -->
+        <div class="branch is-open" data-branch="football">
+          <div class="branch__inner">
+            <fieldset class="q" data-q="level" disabled>
+              <legend class="q__head"><span class="mono q__n">02</span><span class="q__label">Competitive level</span></legend>
+              <div class="choices" role="radiogroup" data-levels>
+                <p class="q__hint">Scegli prima la categoria.</p>
+              </div>
+            </fieldset>
 
-        <!-- 3. Fase -->
-        <fieldset class="q" data-q="phase" disabled>
-          <legend class="q__head"><span class="mono q__n">03</span><span class="q__label">Season phase</span></legend>
-          <div class="choices choices--4" role="radiogroup">
-            <label class="choice"><input type="radio" name="phase" value="off"><span><b>Off-season</b><small>Giu – Lug</small></span></label>
-            <label class="choice"><input type="radio" name="phase" value="pre"><span><b>Pre-season</b><small>Lug – Ago</small></span></label>
-            <label class="choice"><input type="radio" name="phase" value="in"><span><b>In-season</b><small>Set – Mag</small></span></label>
-            <label class="choice"><input type="radio" name="phase" value="win"><span><b>Winter break</b><small>Dic – Gen</small></span></label>
-          </div>
-        </fieldset>
+            <fieldset class="q" data-q="phase" disabled>
+              <legend class="q__head"><span class="mono q__n">03</span><span class="q__label">Season phase</span></legend>
+              <div class="choices choices--4" role="radiogroup">
+                <label class="choice"><input type="radio" name="phase" value="off"><span><b>Off-season</b><small>Giu – Lug</small></span></label>
+                <label class="choice"><input type="radio" name="phase" value="pre"><span><b>Pre-season</b><small>Lug – Ago</small></span></label>
+                <label class="choice"><input type="radio" name="phase" value="in"><span><b>In-season</b><small>Set – Mag</small></span></label>
+                <label class="choice"><input type="radio" name="phase" value="win"><span><b>Winter break</b><small>Dic – Gen</small></span></label>
+              </div>
+            </fieldset>
 
-        <!-- 4. Ruolo -->
-        <fieldset class="q" data-q="role" disabled>
-          <legend class="q__head"><span class="mono q__n">04</span><span class="q__label">Position</span></legend>
-          <div class="role">
-            <svg class="pitch" viewBox="0 0 68 105" role="img" aria-label="Campo: seleziona il tuo ruolo">
-              <g class="pitch__lines" fill="none" stroke-width=".35">
-                <rect x="1" y="1" width="66" height="103"/>
-                <line x1="1" y1="52.5" x2="67" y2="52.5"/>
-                <circle cx="34" cy="52.5" r="9.15"/>
-                <rect x="13.85" y="1" width="40.3" height="16.5"/>
-                <rect x="13.85" y="87.5" width="40.3" height="16.5"/>
-                <rect x="24.85" y="1" width="18.3" height="5.5"/>
-                <rect x="24.85" y="98.5" width="18.3" height="5.5"/>
-                <path d="M26.7 17.5a9.15 9.15 0 0 0 14.6 0M26.7 87.5a9.15 9.15 0 0 1 14.6 0"/>
-              </g>
-              <g data-dots></g>
-            </svg>
-            <div class="choices choices--roles" role="radiogroup" data-roles></div>
+            <fieldset class="q" data-q="role" disabled>
+              <legend class="q__head"><span class="mono q__n">04</span><span class="q__label">Position</span></legend>
+              <div class="role">
+                <svg class="pitch" viewBox="0 0 68 105" role="img" aria-label="Campo: seleziona il tuo ruolo">
+                  <g class="pitch__lines" fill="none" stroke-width=".35">
+                    <rect x="1" y="1" width="66" height="103"/>
+                    <line x1="1" y1="52.5" x2="67" y2="52.5"/>
+                    <circle cx="34" cy="52.5" r="9.15"/>
+                    <rect x="13.85" y="1" width="40.3" height="16.5"/>
+                    <rect x="13.85" y="87.5" width="40.3" height="16.5"/>
+                    <rect x="24.85" y="1" width="18.3" height="5.5"/>
+                    <rect x="24.85" y="98.5" width="18.3" height="5.5"/>
+                    <path d="M26.7 17.5a9.15 9.15 0 0 0 14.6 0M26.7 87.5a9.15 9.15 0 0 1 14.6 0"/>
+                  </g>
+                  <g data-dots></g>
+                </svg>
+                <div class="choices choices--roles" role="radiogroup" data-roles></div>
+              </div>
+            </fieldset>
           </div>
-        </fieldset>
+        </div>
+
+        <!-- Ramo fitness: niente campo e niente ruolo, solo l'obiettivo -->
+        <div class="branch" data-branch="fitness" inert aria-hidden="true">
+          <div class="branch__inner">
+            <fieldset class="q" data-q="goal">
+              <legend class="q__head"><span class="mono q__n">02</span><span class="q__label">Your training goal</span></legend>
+              <div class="choices choices--goals" role="radiogroup" data-goals></div>
+            </fieldset>
+          </div>
+        </div>
       </form>
 
       <!-- OUTPUT -->
       <aside class="profile reveal" data-profile aria-live="polite">
         <div class="profile__top">
           <span class="mono profile__code" data-code>FT · — · — · — · —</span>
-          <span class="mono profile__progress"><span data-progress>0</span>/4</span>
+          <span class="mono profile__progress"><span data-progress>0</span>/<span data-total>4</span></span>
         </div>
         <div class="profile__bar"><span data-progress-bar></span></div>
 
         <div class="profile__empty" data-empty>
           <p class="profile__empty-title">Your profile starts here.</p>
-          <p>Rispondi alle quattro domande: priorità fisiche, settimana tipo e percorso consigliato si aggiornano in tempo reale.</p>
+          <p>Rispondi alle domande: priorità di lavoro, focus del blocco e percorso consigliato si aggiornano in tempo reale.</p>
         </div>
 
         <div class="profile__body" data-body hidden>
+          <p class="mono profile__kind" data-kind>Football Performance Profile</p>
           <h3 class="profile__title" data-title></h3>
           <p class="profile__demand" data-demand></p>
 
           <div class="profile__block">
             <p class="mono profile__label">Work priorities</p>
             <ul class="bars" data-bars></ul>
-          </div>
-
-          <div class="profile__block">
-            <p class="mono profile__label">Typical week <span class="profile__label-note" data-sessions></span></p>
-            <ol class="week" data-week></ol>
           </div>
 
           <div class="profile__block">
@@ -294,63 +310,146 @@
         <h2 class="display section__title" data-split>Choose how<br>you train.</h2>
       </div>
       <div class="seg reveal" role="tablist" aria-label="Modalità">
-        <button class="seg__btn" role="tab" aria-selected="true" data-mode="live">In presenza</button>
-        <button class="seg__btn" role="tab" aria-selected="false" data-mode="online">Online</button>
+        <button class="seg__btn" role="tab" id="tab-live" aria-selected="true" aria-controls="panel-live" data-mode="live">In presenza</button>
+        <button class="seg__btn" role="tab" id="tab-online" aria-selected="false" aria-controls="panel-online" data-mode="online">Online</button>
         <span class="seg__pill" aria-hidden="true"></span>
       </div>
     </header>
 
-    <!-- PREZZI: sostituire "€ ––" con i prezzi reali -->
-    <div class="plans__grid" data-plans>
-      <article class="plan reveal" data-plan="field">
-        <header class="plan__head">
-          <span class="mono plan__num">01</span>
-          <h3 class="display plan__name">Field</h3>
-          <p class="plan__for" data-live="Per chi vuole essere più veloce ed esplosivo in campo, con un coach al fianco." data-online="Per chi vuole diventare più veloce allenandosi in autonomia, con video e feedback.">Per chi vuole essere più veloce ed esplosivo in campo, con un coach al fianco.</p>
-        </header>
-        <p class="plan__price"><span class="plan__amount">€ ––</span><span class="plan__unit" data-live="/ 4 sessioni" data-online="/ mese">/ 4 sessioni</span></p>
-        <ul class="plan__list">
-          <li>Valutazione iniziale di sprint e cambi di direzione</li>
-          <li data-live="Sessioni 1:1 in campo" data-online="Programma di campo settimanale">Sessioni 1:1 in campo</li>
-          <li>Esercitazioni specifiche per il tuo ruolo</li>
-          <li>Re-test a fine blocco</li>
-        </ul>
-        <a class="btn btn--ink plan__cta" href="#contatti" data-plan-cta="Field">Scegli Field</a>
-      </article>
+    <!-- IN PRESENZA -->
+    <div class="plans__panel is-active" id="panel-live" role="tabpanel" aria-labelledby="tab-live" data-panel="live">
+      <div class="plans__grid">
+        <article class="plan reveal">
+          <header class="plan__head">
+            <span class="mono plan__num">01 · In presenza</span>
+            <h3 class="display plan__name">Field</h3>
+            <p class="plan__for">Allenamento individuale in campo con il coach: velocità, accelerazione, cambi di direzione e movimenti specifici del tuo ruolo.</p>
+          </header>
+          <dl class="plan__spec">
+            <div><dt class="mono">Training Environment</dt><dd>Football Field or Suitable Outdoor Training Area<small>Campo da calcio o area esterna idonea all’allenamento</small></dd></div>
+          </dl>
+          <ul class="plan__list">
+            <li>Valutazione iniziale di sprint e cambi di direzione</li>
+            <li>Sessioni 1:1 in campo</li>
+            <li>Esercitazioni specifiche per il tuo ruolo</li>
+            <li>Re-test a fine blocco</li>
+          </ul>
+          <a class="btn btn--ink plan__cta" href="#contatti" data-plan-cta="Field" data-plan-mode="In presenza">Richiedi informazioni</a>
+        </article>
 
-      <article class="plan reveal" data-plan="gym">
-        <header class="plan__head">
-          <span class="mono plan__num">02</span>
-          <h3 class="display plan__name">Gym</h3>
-          <p class="plan__for" data-live="Per chi vuole più forza nei contrasti e meno infortuni durante la stagione." data-online="Programma di forza con progressioni, video degli esercizi e check settimanali.">Per chi vuole più forza nei contrasti e meno infortuni durante la stagione.</p>
-        </header>
-        <p class="plan__price"><span class="plan__amount">€ ––</span><span class="plan__unit" data-live="/ 4 sessioni" data-online="/ mese">/ 4 sessioni</span></p>
-        <ul class="plan__list">
-          <li>Screening del movimento</li>
-          <li data-live="Sessioni 1:1 in palestra" data-online="Programma di palestra periodizzato">Sessioni 1:1 in palestra</li>
-          <li>Prevenzione mirata su flessori, adduttori e caviglie</li>
-          <li>Carichi adattati al calendario delle partite</li>
-        </ul>
-        <a class="btn btn--ink plan__cta" href="#contatti" data-plan-cta="Gym">Scegli Gym</a>
-      </article>
+        <article class="plan reveal">
+          <header class="plan__head">
+            <span class="mono plan__num">02 · In presenza</span>
+            <h3 class="display plan__name">Gym</h3>
+            <p class="plan__for">Allenamento individuale in palestra con il coach: forza, potenza e prevenzione degli infortuni, programmate intorno alle partite.</p>
+          </header>
+          <dl class="plan__spec">
+            <div><dt class="mono">Training Environment</dt><dd>Equipped Gym<small>Palestra attrezzata</small></dd></div>
+          </dl>
+          <ul class="plan__list">
+            <li>Screening del movimento</li>
+            <li>Sessioni 1:1 in palestra</li>
+            <li>Prevenzione mirata su flessori, adduttori e caviglie</li>
+            <li>Carichi adattati al calendario delle partite</li>
+          </ul>
+          <a class="btn btn--ink plan__cta" href="#contatti" data-plan-cta="Gym" data-plan-mode="In presenza">Richiedi informazioni</a>
+        </article>
 
-      <article class="plan plan--feature reveal" data-plan="complete">
-        <span class="plan__badge mono">Full program</span>
-        <header class="plan__head">
-          <span class="mono plan__num">03</span>
-          <h3 class="display plan__name">Complete<br>Performance</h3>
-          <p class="plan__for" data-live="Campo, palestra e monitoraggio in un unico percorso, seguito settimana per settimana." data-online="Il percorso completo a distanza, costruito sul tuo profilo e sulla tua stagione.">Campo, palestra e monitoraggio in un unico percorso, seguito settimana per settimana.</p>
-        </header>
-        <p class="plan__price"><span class="plan__amount">€ ––</span><span class="plan__unit" data-live="/ 8 sessioni" data-online="/ mese">/ 8 sessioni</span></p>
-        <ul class="plan__list">
-          <li>Valutazione completa e profilo prestativo</li>
-          <li data-live="Sessioni 1:1 in campo e in palestra" data-online="Programma campo + palestra">Sessioni 1:1 in campo e in palestra</li>
-          <li>Monitoraggio di carico e wellness</li>
-          <li>Re-test e report a ogni blocco</li>
-          <li>Contatto diretto su WhatsApp</li>
-        </ul>
-        <a class="btn btn--gold plan__cta" href="#contatti" data-plan-cta="Complete Performance">Scegli Complete</a>
-      </article>
+        <article class="plan plan--feature reveal">
+          <span class="plan__badge mono">Full program</span>
+          <header class="plan__head">
+            <span class="mono plan__num">03 · In presenza</span>
+            <h3 class="display plan__name">Complete<br>Performance</h3>
+            <p class="plan__for">Campo, palestra e monitoraggio in un unico percorso, seguito settimana per settimana.</p>
+          </header>
+          <dl class="plan__spec">
+            <div><dt class="mono">Training Environment</dt><dd>Field + Gym<small>Campo e palestra</small></dd></div>
+          </dl>
+          <ul class="plan__list">
+            <li>Valutazione completa e profilo prestativo</li>
+            <li>Sessioni 1:1 in campo e in palestra</li>
+            <li>Monitoraggio di carico e wellness</li>
+            <li>Re-test e report a ogni blocco</li>
+          </ul>
+          <a class="btn btn--gold plan__cta" href="#contatti" data-plan-cta="Complete Performance" data-plan-mode="In presenza">Richiedi informazioni</a>
+        </article>
+      </div>
+    </div>
+
+    <!-- ONLINE -->
+    <div class="plans__panel" id="panel-online" role="tabpanel" aria-labelledby="tab-online" data-panel="online" hidden>
+      <div class="program">
+        <p class="mono program__tag"><span class="dot"></span>12-Week Individualized Program</p>
+        <p class="program__text">Il numero e la distribuzione delle sessioni vengono definiti individualmente sulla base del profilo dell’atleta, degli allenamenti con la squadra, del calendario competitivo, della fase della stagione e degli obiettivi specifici.</p>
+      </div>
+      <div class="plans__grid">
+        <article class="plan">
+          <header class="plan__head">
+            <span class="mono plan__num">01 · Online</span>
+            <h3 class="display plan__name">Field</h3>
+            <p class="plan__en">Individualized On-Field Performance Training</p>
+            <p class="plan__for">Allenamento individualizzato della performance sul campo.</p>
+          </header>
+          <dl class="plan__spec">
+            <div><dt class="mono">Structure</dt><dd>Frequenza individualizzata</dd></div>
+          </dl>
+          <ul class="plan__tags mono">
+            <li>Running Conditioning</li><li>Speed &amp; Acceleration</li><li>Agility &amp; Change of Direction</li><li>Position-Specific Movement</li>
+          </ul>
+          <div class="plan__price">
+            <s class="plan__old" aria-label="Prezzo standard 299 euro">€299</s>
+            <span class="plan__amount">€249</span>
+            <span class="plan__unit">/ 12 settimane</span>
+          </div>
+          <p class="plan__offer"><span class="mono plan__offer-tag">Launch Offer 2026</span><span>Valid until 31/12/2026</span></p>
+          <a class="btn btn--ink plan__cta" href="#contatti" data-plan-cta="Field" data-plan-mode="Online">Scegli Field</a>
+        </article>
+
+        <article class="plan">
+          <header class="plan__head">
+            <span class="mono plan__num">02 · Online</span>
+            <h3 class="display plan__name">Gym</h3>
+            <p class="plan__en">Individualized Strength &amp; Conditioning Training</p>
+            <p class="plan__for">Allenamento individualizzato di forza e condizionamento.</p>
+          </header>
+          <dl class="plan__spec">
+            <div><dt class="mono">Structure</dt><dd>Frequenza individualizzata</dd></div>
+          </dl>
+          <ul class="plan__tags mono">
+            <li>Strength</li><li>Power</li><li>Explosiveness</li><li>Injury Prevention</li>
+          </ul>
+          <div class="plan__price">
+            <s class="plan__old" aria-label="Prezzo standard 299 euro">€299</s>
+            <span class="plan__amount">€249</span>
+            <span class="plan__unit">/ 12 settimane</span>
+          </div>
+          <p class="plan__offer"><span class="mono plan__offer-tag">Launch Offer 2026</span><span>Valid until 31/12/2026</span></p>
+          <a class="btn btn--ink plan__cta" href="#contatti" data-plan-cta="Gym" data-plan-mode="Online">Scegli Gym</a>
+        </article>
+
+        <article class="plan plan--feature">
+          <span class="plan__badge mono">Full program</span>
+          <header class="plan__head">
+            <span class="mono plan__num">03 · Online</span>
+            <h3 class="display plan__name">Complete</h3>
+            <p class="plan__en">Field + Gym Integrated Program</p>
+            <p class="plan__for">Programmazione completa e coordinata Field + Gym, adattata al carico settimanale dell’atleta e agli impegni con la squadra.</p>
+          </header>
+          <dl class="plan__spec">
+            <div><dt class="mono">Structure</dt><dd>Field + Gym integrati</dd></div>
+          </dl>
+          <ul class="plan__tags mono">
+            <li>Field</li><li>Gym</li><li>Weekly Load</li><li>Team Schedule</li>
+          </ul>
+          <div class="plan__price">
+            <s class="plan__old" aria-label="Prezzo standard 498 euro">€498</s>
+            <span class="plan__amount">€399</span>
+            <span class="plan__unit">/ 12 settimane</span>
+          </div>
+          <p class="plan__offer"><span class="mono plan__offer-tag">Launch Offer 2026</span><span>Valid until 31/12/2026</span></p>
+          <a class="btn btn--gold plan__cta" href="#contatti" data-plan-cta="Complete" data-plan-mode="Online">Scegli Complete</a>
+        </article>
+      </div>
     </div>
 
     <p class="plans__note mono reveal">Non sai quale scegliere? Parti dalla valutazione: il percorso giusto te lo consiglio io.</p>
@@ -360,24 +459,89 @@
 <!-- ============ CHI SONO ============ -->
 <section class="about section" id="chi">
   <div class="container about__grid">
-    <!-- FOTO RITRATTO: sostituire img/tunnel.jpg con un ritratto di Francesco (verticale 4:5) -->
+    <!-- FOTO RITRATTO: sostituire img/tunnel.jpg con la foto di Francesco (ritaglio verticale 4:5, con lo stemma FIGC) -->
     <figure class="about__media photo" data-reveal-media>
       <img src="img/tunnel.jpg" alt="Tunnel degli spogliatoi con la luce del campo in fondo" width="1200" height="1500" loading="lazy" decoding="async">
-      <figcaption class="mono about__cap"><span>F.T · Coach</span><span>Est. 20––</span></figcaption>
+      <figcaption class="mono about__cap"><span>F.T · Coach</span><span>Roma · Online</span></figcaption>
     </figure>
     <div class="about__body">
       <p class="eyebrow reveal"><span class="dot"></span>About</p>
       <h2 class="display section__title" data-split>Francesco<br>Tomai.</h2>
-      <p class="about__lead reveal">Preparatore atletico specializzato nel calcio. Ho fondato F.T Athletic Football Position su un’idea semplice: un difensore centrale e un’ala non giocano la stessa partita, quindi non possono seguire lo stesso programma.</p>
-      <p class="reveal">Ogni percorso parte da una valutazione, tiene conto del livello a cui giochi e del momento della stagione, e cambia in base ai dati che raccogliamo insieme. Niente schede copiate, niente allenamenti “per tenersi in forma”.</p>
-      <!-- Da completare con titoli ed esperienze reali -->
-      <dl class="specs reveal">
-        <div><dt class="mono">Education</dt><dd>[Laurea / titolo]</dd></div>
-        <div><dt class="mono">Certifications</dt><dd>[Certificazioni]</dd></div>
-        <div><dt class="mono">Experience</dt><dd>[Club · categorie]</dd></div>
-        <div><dt class="mono">Based in</dt><dd>[Città] · Online</dd></div>
-      </dl>
+      <p class="mono about__role reveal">Preparatore Atletico Professionista FIGC · Strength &amp; Conditioning Coach</p>
+      <p class="about__lead reveal">Ho fondato F.T Athletic Football Position partendo da un principio semplice: un difensore centrale e un esterno affrontano richieste fisiche e prestative diverse, quindi non possono allenarsi allo stesso modo.</p>
+      <p class="reveal">La mia formazione nelle Scienze Motorie e nella Scienza e Tecnica dello Sport, insieme all’esperienza maturata nella preparazione fisica applicata al calcio, dal settore giovanile al livello professionistico, è alla base di un approccio orientato allo sviluppo della performance.</p>
+      <p class="reveal">Ogni percorso integra valutazione, programmazione, Strength &amp; Conditioning e monitoraggio, considerando ruolo, livello competitivo, fase della stagione, attività e carichi di squadra e obiettivi individuali.</p>
+      <p class="about__en reveal">Position-specific performance training built around the athlete’s level, season phase, team activities and training loads, and individual goals.</p>
+      <ul class="about__contact reveal" aria-label="Contatti">
+        <li>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <span>Roma · Online</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6 8.5-6"/></svg>
+          <a href="mailto:ftfootballposition@gmail.com">ftfootballposition@gmail.com</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>
+          <!-- INSTAGRAM: inserire l'URL del profilo -->
+          <a href="#" data-instagram>Instagram</a>
+        </li>
+      </ul>
     </div>
+  </div>
+
+  <div class="container creds">
+    <article class="cred reveal">
+      <h3 class="mono cred__title">Education</h3>
+      <ul class="cred__list">
+        <li><b>MSc</b> — Laurea Magistrale in Scienza e Tecnica dello Sport</li>
+        <li><b>BSc</b> — Laurea Triennale in Scienze Motorie</li>
+      </ul>
+      <p class="cred__note">Università degli Studi di Roma “Foro Italico”</p>
+    </article>
+
+    <article class="cred reveal">
+      <h3 class="mono cred__title">Qualifications</h3>
+      <ul class="cred__list">
+        <li>Preparatore Atletico Professionista FIGC</li>
+        <li>Allenatore UEFA B</li>
+        <li>Personal Trainer Senior Level 2 — FIPE</li>
+        <li>Kettlebells &amp; Core Trainer — BBF Italia</li>
+        <li>Allenatore Nazionale — BBF Italia</li>
+        <li>EXOS Performance Specialist <span class="cred__tag mono">In progress</span></li>
+        <li>CFSC Level 2 <span class="cred__tag mono">In progress</span></li>
+      </ul>
+    </article>
+
+    <article class="cred reveal">
+      <h3 class="mono cred__title">Football Experience</h3>
+      <ul class="cred__list">
+        <li>Guidonia Montecelio — Serie C Giovanili</li>
+        <li>Atletico Terme Fiuggi — U19 Nazionale</li>
+        <li>Grifone Calcio · Accademia Calcio Roma · SFF Atletico — Regionali Élite</li>
+        <li>SVS Roma · Aurelia Antica — Settore Giovanile</li>
+        <li>Fregene Maccarese — Promozione</li>
+      </ul>
+      <p class="cred__note">Individual Strength &amp; Conditioning con giovani e calciatori professionisti. Esperienza individuale con atleti di AS Roma · SS Lazio · Frosinone Calcio · altri club Pro.</p>
+    </article>
+
+    <article class="cred reveal">
+      <h3 class="mono cred__title">Fitness &amp; Performance Experience</h3>
+      <ul class="cred__list">
+        <li>Virgin Active — Personal Trainer</li>
+        <li>Heaven Sporting Club — Personal Training &amp; Performance</li>
+      </ul>
+      <p class="cred__note">Esperienza nella programmazione individualizzata, nello sviluppo di forza, potenza e capacità condizionali, nel wellness, functional training, prevenzione degli infortuni e nel miglioramento della performance e della qualità del movimento.</p>
+    </article>
+
+    <article class="cred cred--titles reveal">
+      <h3 class="mono cred__title">Titles &amp; Achievements</h3>
+      <ul class="cred__list">
+        <li>Campionato Nazionale U17 LND</li>
+        <li>Titolo Regionale Élite U17 Lazio</li>
+        <li>Supercoppa Regionale Élite U15 Lazio</li>
+      </ul>
+    </article>
   </div>
 </section>
 
@@ -388,27 +552,40 @@
       <p class="eyebrow eyebrow--ink reveal"><span class="dot"></span>FAQ</p>
       <h2 class="display section__title" data-split>Before<br>you start.</h2>
     </header>
-    <!-- Risposte da confermare con Francesco -->
     <div class="faq__list" data-faq>
       <details class="qa reveal">
         <summary>Mi alleno già con la squadra. Non rischio di fare troppo?<span class="qa__icon" aria-hidden="true"></span></summary>
-        <div class="qa__body"><p>No. Il programma si costruisce intorno agli allenamenti di squadra e alla partita: se la settimana è pesante, il carico FT scende. L’obiettivo è arrivare al weekend più fresco, non più stanco.</p></div>
+        <div class="qa__body"><p>No. La programmazione viene costruita considerando allenamenti, partita, fase della stagione e carichi di squadra. Volume, intensità e distribuzione delle sessioni FT vengono adattati al tuo microciclo per integrare il lavoro individuale con quello svolto con la squadra.</p></div>
       </details>
       <details class="qa reveal">
         <summary>Serve una palestra attrezzata?<span class="qa__icon" aria-hidden="true"></span></summary>
-        <div class="qa__body"><p>Per Field basta un campo o uno spazio di 30 metri. Per Gym e Complete servono bilanciere e manubri. Online adattiamo gli esercizi all’attrezzatura che hai.</p></div>
+        <div class="qa__body"><p>Dipende dal percorso scelto. Per Field è sufficiente un campo da calcio, una pista di atletica o uno spazio esterno idoneo all’allenamento. Per Gym e Complete, la programmazione viene adattata all’attrezzatura realmente disponibile, definita prima dell’inizio del percorso.</p></div>
       </details>
       <details class="qa reveal">
         <summary>Da che età si può iniziare?<span class="qa__icon" aria-hidden="true"></span></summary>
-        <div class="qa__body"><p>Dai 13–14 anni, con carichi calibrati sulla crescita. Nei più giovani la priorità è imparare a muoversi bene: velocità, coordinazione e tecnica degli esercizi, prima del peso.</p></div>
+        <div class="qa__body"><p>I percorsi sono rivolti a calciatori a partire dalla categoria U14, con una programmazione adattata all’età, al livello e alla fase di sviluppo dell’atleta. Nei più giovani particolare attenzione viene dedicata a qualità del movimento, coordinazione, velocità, tecnica degli esercizi e sviluppo progressivo della forza.</p></div>
       </details>
       <details class="qa reveal">
         <summary>Come funziona la valutazione iniziale?<span class="qa__icon" aria-hidden="true"></span></summary>
-        <div class="qa__body"><p>È una sessione di test: sprint, salto, cambi di direzione, resistenza e mobilità. Alla fine ricevi il tuo profilo prestativo e il percorso che ti consiglio, senza obbligo di proseguire.</p></div>
+        <div class="qa__body">
+          <p>Prima di iniziare riceverai un questionario iniziale approfondito, attraverso il quale raccoglieremo le informazioni necessarie per conoscere il tuo profilo: esperienza, ruolo, livello competitivo, fase della stagione, attività e carichi di squadra, disponibilità, attrezzatura e obiettivi individuali.</p>
+          <p>A queste informazioni si affianca la valutazione delle qualità fisiche attraverso test di sprint, salto, cambi di direzione, resistenza e screening del movimento. L’insieme dei dati permette di definire il profilo prestativo dell’atleta, individuare le priorità di lavoro e costruire una programmazione realmente individualizzata.</p>
+        </div>
       </details>
       <details class="qa reveal">
         <summary>Come funziona il programma online?<span class="qa__icon" aria-hidden="true"></span></summary>
-        <div class="qa__body"><p>Ricevi il programma settimana per settimana, con video degli esercizi. Ogni settimana mi mandi carichi e sensazioni e io adatto la settimana successiva.</p></div>
+        <div class="qa__body">
+          <p>Dopo la raccolta e l’analisi delle informazioni iniziali viene sviluppato un programma individualizzato di 12 settimane, Field, Gym o Complete, costruito in base al tuo profilo e organizzato considerando l’attività svolta con la squadra.</p>
+          <p>Durante il percorso vengono monitorati carichi, RPE, wellness e feedback dell’atleta, così da adattare progressivamente la programmazione quando necessario.</p>
+        </div>
+      </details>
+      <details class="qa reveal">
+        <summary>Qual è la differenza tra Field, Gym e Complete?<span class="qa__icon" aria-hidden="true"></span></summary>
+        <div class="qa__body"><p>Field è dedicato alla performance sul campo, Gym allo sviluppo delle qualità fisiche attraverso il lavoro in palestra, mentre Complete integra entrambi in un’unica programmazione coordinata.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary>Il programma è uguale per tutti i giocatori dello stesso ruolo?<span class="qa__icon" aria-hidden="true"></span></summary>
+        <div class="qa__body"><p>No. Il ruolo è uno degli elementi utilizzati per costruire il programma, ma vengono considerati anche livello competitivo, fase della stagione, attività e carichi di squadra, obiettivi e caratteristiche individuali.</p></div>
       </details>
     </div>
   </div>
@@ -463,7 +640,7 @@
     <div class="footer__meta mono">
       <span>© <span data-year></span> F.T Athletic Football Position</span>
       <a href="mailto:ftfootballposition@gmail.com">ftfootballposition@gmail.com</a>
-      <a href="#" aria-label="Instagram">Instagram</a>
+      <a href="#" data-instagram>Instagram</a>
     </div>
   </div>
 </footer>
