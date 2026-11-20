@@ -1132,10 +1132,9 @@ legend { padding: 0; }
   box-shadow: inset 0 0 0 1px rgb(var(--gold-rgb) / 0.5); color: var(--gold);
 }
 .cred__note { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; line-height: 1.5; text-wrap: pretty; }
-.cred--titles { background: var(--gold); color: var(--ink); box-shadow: none; }
-.cred--titles .cred__title { color: var(--ink); }
-.cred--titles .cred__list li::before { background: var(--ink); }
-.cred--titles .cred__list li { font-weight: 600; }
+/* esperienze: nomi di squadre e club in bianco, categoria più tenue */
+.cred__list--teams li { color: var(--muted); }
+.cred__team { color: #fff; font-weight: 600; }
 
 .faq .qa__body p + p { margin-top: -14px; }
 
