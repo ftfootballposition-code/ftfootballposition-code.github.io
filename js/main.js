@@ -189,7 +189,7 @@
   const ROLES = {
     gk: {
       name: 'Portiere', short: 'P', dots: [[34, 97]],
-      demand: 'Esplosività su 1–3 metri, salto e reattività. Tuffi, cadute e rialzate ripetute: pochi metri, intensità massima.',
+      demand: 'Esplosività sui primi 1–3 metri, salto e reattività, con tuffi, cadute e rialzate ripetute ad alta intensità.',
       q: { acc: 80, vmax: 25, cod: 75, str: 75, pow: 95, end: 35 },
       focus: ['Potenza reattiva e stacco verticale', 'Rapidità laterale e lavoro di piedi', 'Forza di core e spalle per i tuffi'],
     },
@@ -231,7 +231,7 @@
     },
     st: {
       name: 'Attaccante', short: 'ATT', dots: [[34, 19]],
-      demand: 'Scatti brevi in profondità, duelli spalle alla porta, salto e protezione palla. Poche corse, tutte decisive.',
+      demand: 'Scatti brevi in profondità, duelli spalle alla porta, stacco di testa e protezione palla. Corre meno di altri ruoli, ma quasi sempre a intensità massima.',
       q: { acc: 95, vmax: 80, cod: 70, str: 80, pow: 90, end: 60 },
       focus: ['Accelerazione sui primi 10 m', 'Forza e potenza per i duelli', 'Stacco e colpo di testa'],
     },
@@ -554,16 +554,13 @@
     });
   });
 
+  // nessun acquisto diretto: il pulsante del pacchetto preseleziona il percorso nella candidatura
+  const planSelect = $('[data-plan-select]');
   $$('[data-plan-cta]').forEach((a) => a.addEventListener('click', () => {
-    const msg = $('.form textarea[name="messaggio"]');
     const mode = a.dataset.planMode;
-    const what = mode === 'Online' ? `${a.dataset.planCta} Online (12 settimane)` : `${a.dataset.planCta} in presenza`;
-    if (msg && !msg.value.trim()) {
-      msg.value = mode === 'Online'
-        ? `Mi interessa il percorso ${what}.`
-        : `Vorrei ricevere informazioni sul percorso ${what}.`;
-    }
-    toast(`${what} aggiunto alla richiesta`);
+    const value = mode === 'Online' ? `${a.dataset.planCta} · Online (12 settimane)` : `${a.dataset.planCta} · In presenza`;
+    if (planSelect && [...planSelect.options].some((o) => o.value === value)) planSelect.value = value;
+    toast(`${value.replace(' (12 settimane)', '')} selezionato nella candidatura`);
   }));
 
   /* ------------------------------------------------------------------
@@ -598,13 +595,14 @@
     delete data._honey;
 
     const payload = {
-      _subject: `F.T Athletic Football Position — richiesta valutazione di ${data.nome}`,
+      _subject: `F.T Athletic Football Position — candidatura di ${data.nome}`,
       _template: 'table',
       _replyto: data.email,
       Nome: data.nome,
       'Età': data.eta || '—',
       Email: data.email,
       Telefono: data.telefono || '—',
+      Percorso: data.percorso || '—',
       Profilo: data.profilo || '—',
       Messaggio: data.messaggio || '—',
     };
@@ -626,9 +624,9 @@
       await new Promise((r) => setTimeout(r, Math.max(0, 600 - (performance.now() - started))));
       const first = (data.nome || '').trim().split(/\s+/)[0];
       openModal({
-        eyebrow: 'Request sent',
+        eyebrow: 'Application sent',
         title: 'See you on the pitch.',
-        html: `Grazie${first ? ` ${first}` : ''}, ho ricevuto la tua richiesta. Ti ricontatto entro 48 ore per fissare la valutazione.`,
+        html: `Grazie${first ? ` ${first}` : ''}, ho ricevuto la tua candidatura. Ti ricontatto entro 48 ore per conoscerci e capire se il percorso fa per te.`,
       });
       cform.reset();
     } catch (err) {
@@ -638,7 +636,7 @@
         error: true,
         eyebrow: 'Something went wrong',
         title: 'Try again.',
-        html: `La richiesta non è partita, probabilmente per un problema di connessione. Riprova tra poco oppure scrivimi direttamente a <a href="${mailto}">${CONTACT_EMAIL}</a>.`,
+        html: `La candidatura non è partita, probabilmente per un problema di connessione. Riprova tra poco oppure mandala via email a <a href="${mailto}">${CONTACT_EMAIL}</a>.`,
         actions: `<a class="btn btn--gold" href="${mailto}">Invia via email</a><button class="btn btn--ghost" type="button" data-close>Chiudi</button>`,
       });
     } finally {

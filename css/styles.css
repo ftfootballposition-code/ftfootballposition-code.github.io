@@ -1163,3 +1163,23 @@ legend { padding: 0; }
   inset: 0 0 auto 0; padding: 16px 16px 40px;
   background: linear-gradient(180deg, rgb(10 10 10 / 0.72), rgb(10 10 10 / 0));
 }
+
+/* --- candidatura: niente acquisto diretto --- */
+.plans__how {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+  margin: -24px 0 32px; max-width: 760px;
+  color: var(--ink-muted); font-size: 15px; text-wrap: pretty;
+}
+.plans__how-tag { color: var(--ink); font-size: 10.5px; padding: 5px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--ink-line); }
+.contact__steps { display: grid; gap: 10px; margin-top: 32px; }
+.contact__steps li { display: flex; align-items: baseline; gap: 14px; font-size: 16px; font-weight: 600; }
+.contact__steps .mono { font-size: 11px; font-weight: 500; color: rgb(10 10 10 / 0.6); }
+.contact__steps + .contact__promise { margin-top: 24px; }
+.field select {
+  width: 100%; min-height: 52px; padding: 14px 44px 14px 16px; border-radius: 12px;
+  background: rgb(255 255 255 / 0.32) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%230a0a0a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M3 4.5l3 3 3-3'/></svg>") no-repeat right 16px center;
+  border: 1px solid rgb(10 10 10 / 0.16); color: var(--ink); font-size: 16px;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+  transition-property: background-color, border-color; transition-duration: 150ms; transition-timing-function: ease-out;
+}
+.field select:focus { outline: none; background-color: rgb(255 255 255 / 0.55); border-color: var(--ink); }
